@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant AI Demo - datanexusify.com/demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; color: #333; 
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; color: white; margin-bottom: 50px; }
+        h1 { font-size: 3em; margin-bottom: 10px; }
+        .demo-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); 
+        }
+        .card { text-align: center; padding: 30px; border-radius: 16px; background: #f8f9fa; transition: all 0.3s; cursor: pointer; border: 3px solid transparent; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); border-color: #667eea; }
+        .card h3 { color: #333; margin-bottom: 15px; font-size: 1.5em; }
+        .btn { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; border: none; padding: 15px 30px; border-radius: 50px; 
+            font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; 
+            width: 100%; margin-top: 10px;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
+        .status { margin-top: 15px; padding: 12px; border-radius: 8px; font-weight: 600; display: none; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .gtm-status { background: #e8f5e8; color: #155724; padding: 15px; border-radius: 12px; margin: 30px 0; text-align: center; font-weight: 600; }
+        footer { text-align: center; margin-top: 50px; color: white; opacity: 0.9; font-size: 14px; }
+    </style>
+
+    <!-- Google Tag Manager (GTM-WNXN7HMG) -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WNXN7HMG');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNXN7HMG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="container">
+        <header>
+            <h1>🍽️ Restaurant AI Demo</h1>
+            <p><strong>datanexusify.com/demo</strong> - Live GTM + GA4 conversion tracking</p>
+        </header>
+
+        <div class="gtm-status">
+            ✅ <strong>GTM-WNXN7HMG ACTIVE</strong> | Events flow to GA4 → BigQuery ready
+        </div>
+
+        <div class="demo-grid">
+            <div class="card" data-restaurant="Burger Joint">
+                <h3>🍔 Burger Joint</h3>
+                <p>Reserve table for dinner</p>
+                <button class="btn" data-event="reserve_click">Reserve Table</button>
+                <div class="status" id="burger-status"></div>
+            </div>
+
+            <div class="card" data-restaurant="Pizza Place">
+                <h3>🍕 Pizza Place</h3>
+                <p>Quick online order</p>
+                <button class="btn" data-event="order_click">Order Pizza</button>
+                <div class="status" id="pizza-status"></div>
+            </div>
+
+            <div class="card" data-restaurant="Sushi Spot">
+                <h3>🍣 Sushi Spot</h3>
+                <p>50% off this week</p>
+                <button class="btn" data-event="promo_click">Claim Promo</button>
+                <div class="status" id="sushi-status"></div>
+            </div>
+
+            <div class="card" data-restaurant="Taco Truck">
+                <h3>🌮 Taco Truck</h3>
+                <p>View full menu</p>
+                <button class="btn" data-event="view_menu">View Menu</button>
+                <div class="status" id="taco-status"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📊 <strong>Tracking Events:</strong> reserve_click, order_click, promo_click, view_menu<br>
+            🔗 GA4 → BigQuery → Restaurant AI pipeline ready | <strong>GTM-WNXN7HMG</strong></p>
+        </footer>
+    </div>
+
+    <script>
+        // GTM DataLayer 이벤트 전송 함수
+        function sendGTMEvent(eventName, restaurantName) {
+            window.dataLayer = window.dataLayer || [];
+            const eventData = {
+                'event': eventName,
+                'restaurant_name': restaurantName,
+                'restaurant_id': 'resto_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                'page_location': window.location.href,
+                'page_path': window.location.pathname,
+                'user_timestamp': new Date().toISOString(),
+                'demo_page': 'datanexusify.com/demo'
+            };
+            
+            dataLayer.push(eventData);
+            console.log('✅ GTM Event sent:', eventData);
+            return eventData;
+        }
+
+        // 모든 버튼에 이벤트 리스너 추가
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn')) {
+                const eventName = e.target.dataset.event;
+                const restaurantName = e.target.closest('.card').dataset.restaurant;
+                
+                // GTM 이벤트 전송
+                const eventData = sendGTMEvent(eventName, restaurantName);
+                
+                // UI 피드백
+                const statusId = e.target.nextElementSibling.id;
+                const statusEl = document.getElementById(statusId);
+                statusEl.innerHTML = `✅ ${eventName.toUpperCase()}<br><small>${restaurantName} | ID: ${eventData.restaurant_id}</small>`;
+                statusEl.className = 'status success';
+                statusEl.style.display = 'block';
+                
+                // 4초 후 숨기기
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 4000);
+            }
+        });
+
+        // 페이지 로드 이벤트 (GTM 자동 수집)
+        window.addEventListener('load', function() {
+            sendGTMEvent('page_view', 'datanexusify_demo');
+        });
+    </script>
+</body>
+</html>
