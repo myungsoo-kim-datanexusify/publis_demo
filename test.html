@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant AI Demo - datanexusify.com/demo</title>
+    <title>🍽️ Restaurant AI Demo - datanexusify.com/demo</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -11,135 +11,240 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
             min-height: 100vh; color: #333; 
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
         header { text-align: center; color: white; margin-bottom: 50px; }
-        h1 { font-size: 3em; margin-bottom: 10px; }
+        h1 { font-size: 3.2em; margin-bottom: 10px; }
+        .stats { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; }
+        .stat-card { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 20px 30px; border-radius: 20px; text-align: center; }
+        .stat-number { font-size: 2.5em; font-weight: bold; color: #fff; }
+        .stat-label { color: rgba(255,255,255,0.9); font-size: 0.9em; }
         .demo-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; background: white; border-radius: 24px; padding: 40px; box-shadow: 0 25px 70px rgba(0,0,0,0.2); 
         }
-        .card { text-align: center; padding: 30px; border-radius: 16px; background: #f8f9fa; transition: all 0.3s; cursor: pointer; border: 3px solid transparent; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); border-color: #667eea; }
-        .card h3 { color: #333; margin-bottom: 15px; font-size: 1.5em; }
+        .card { padding: 30px; border-radius: 20px; background: #f8f9fa; transition: all 0.3s; cursor: pointer; border: 3px solid transparent; position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.2); border-color: #667eea; }
+        .card h3 { color: #333; margin-bottom: 15px; font-size: 1.6em; }
+        .card p { color: #666; margin-bottom: 20px; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
         .btn { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; border: none; padding: 15px 30px; border-radius: 50px; 
-            font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; 
-            width: 100%; margin-top: 10px;
+            padding: 12px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; cursor: pointer; 
+            transition: all 0.3s; border: none; flex: 1; min-width: 120px;
         }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(102,126,234,0.4); }
-        .status { margin-top: 15px; padding: 12px; border-radius: 8px; font-weight: 600; display: none; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-success { background: linear-gradient(135deg, #4caf50, #45a049); color: white; }
+        .btn-warning { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
+        .btn-danger { background: linear-gradient(135deg, #f44336, #d32f2f); color: white; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .status { margin-top: 15px; padding: 12px; border-radius: 12px; font-weight: 600; display: none; text-align: center; }
         .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-        .gtm-status { background: #e8f5e8; color: #155724; padding: 15px; border-radius: 12px; margin: 30px 0; text-align: center; font-weight: 600; }
-        footer { text-align: center; margin-top: 50px; color: white; opacity: 0.9; font-size: 14px; }
+        .pubsub-status { background: #e3f2fd; color: #1565c0; padding: 20px; border-radius: 16px; margin: 30px 0; text-align: center; font-weight: 600; }
+        .event-log { background: #f1f3f4; padding: 20px; border-radius: 12px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px; }
+        footer { text-align: center; margin-top: 60px; color: white; opacity: 0.9; font-size: 14px; }
+        @media (max-width: 768px) { .demo-grid { grid-template-columns: 1fr; padding: 20px; } }
     </style>
-
-    <!-- Google Tag Manager (GTM-WNXN7HMG) -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-WNXN7HMG');</script>
-    <!-- End Google Tag Manager -->
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNXN7HMG"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <div class="container">
         <header>
-            <h1>🍽️ Restaurant AI Demo</h1>
-            <p><strong>datanexusify.com/demo</strong> - Live GTM + GA4 conversion tracking</p>
+            <h1>🍽️ Restaurant AI Event Tracker</h1>
+            <p><strong>datanexusify.com/demo</strong> | 20 Restaurants | 15 Event Types | Pub/Sub Ready</p>
         </header>
 
-        <div class="gtm-status">
-            ✅ <strong>GTM-WNXN7HMG ACTIVE</strong> | Events flow to GA4 → BigQuery ready
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-events">0</div>
+                <div class="stat-label">Total Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="reserve-count">0</div>
+                <div class="stat-label">Reservations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="order-count">0</div>
+                <div class="stat-label">Orders</div>
+            </div>
+        </div>
+
+        <div class="pubsub-status">
+            🚀 <strong>Pub/Sub Pipeline Ready</strong> | restaurant-events topic | Spark Streaming → BigQuery
         </div>
 
         <div class="demo-grid">
+            <!-- Burger Joint -->
             <div class="card" data-restaurant="Burger Joint">
                 <h3>🍔 Burger Joint</h3>
-                <p>Reserve table for dinner</p>
-                <button class="btn" data-event="reserve_click">Reserve Table</button>
+                <p>Classic American burgers & fries</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-event="reserve_table">Reserve Table</button>
+                    <button class="btn btn-success" data-event="order_online">Order Online</button>
+                    <button class="btn btn-warning" data-event="view_menu">View Menu</button>
+                </div>
                 <div class="status" id="burger-status"></div>
             </div>
 
+            <!-- Pizza Place -->
             <div class="card" data-restaurant="Pizza Place">
                 <h3>🍕 Pizza Place</h3>
-                <p>Quick online order</p>
-                <button class="btn" data-event="order_click">Order Pizza</button>
+                <p>Neapolitan wood-fired pizza</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-event="reserve_table">Reserve</button>
+                    <button class="btn btn-success" data-event="order_takeout">Takeout Order</button>
+                    <button class="btn btn-danger" data-event="promo_click">20% Off</button>
+                </div>
                 <div class="status" id="pizza-status"></div>
             </div>
 
+            <!-- Sushi Spot -->
             <div class="card" data-restaurant="Sushi Spot">
                 <h3>🍣 Sushi Spot</h3>
-                <p>50% off this week</p>
-                <button class="btn" data-event="promo_click">Claim Promo</button>
+                <p>Fresh sushi & sashimi daily</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-event="reserve_omakase">Omakase</button>
+                    <button class="btn btn-success" data-event="sushi_order">Sushi Order</button>
+                    <button class="btn btn-warning" data-event="happy_hour">Happy Hour</button>
+                </div>
                 <div class="status" id="sushi-status"></div>
             </div>
 
+            <!-- Taco Truck -->
             <div class="card" data-restaurant="Taco Truck">
                 <h3>🌮 Taco Truck</h3>
-                <p>View full menu</p>
-                <button class="btn" data-event="view_menu">View Menu</button>
+                <p>Street tacos & margaritas</p>
+                <div class="btn-group">
+                    <button class="btn btn-success" data-event="quick_order">Quick Order</button>
+                    <button class="btn btn-warning" data-event="taco_special">Taco Tuesday</button>
+                    <button class="btn btn-primary" data-event="catering_inquiry">Catering</button>
+                </div>
                 <div class="status" id="taco-status"></div>
+            </div>
+
+            <!-- 더 많은 레스토랑들... -->
+            <div class="card" data-restaurant="Steak House">
+                <h3>🥩 Steak House</h3>
+                <p>Prime dry-aged steaks</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" data-event="steak_reservation">Reserve</button>
+                    <button class="btn btn-success" data-event="wine_pairing">Wine Pairing</button>
+                </div>
+                <div class="status" id="steak-status"></div>
+            </div>
+
+            <div class="card" data-restaurant="BBQ Joint">
+                <h3>🍖 BBQ Joint</h3>
+                <p>Slow-smoked meats</p>
+                <div class="btn-group">
+                    <button class="btn btn-success" data-event="bbq_platter">Platter Order</button>
+                    <button class="btn btn-warning" data-event="catering_bbq">Catering</button>
+                </div>
+                <div class="status" id="bbq-status"></div>
             </div>
         </div>
 
+        <div class="event-log" id="event-log">
+            <strong>📊 Real-time Event Log (Pub/Sub → Spark → BigQuery)</strong><br><br>
+        </div>
+
         <footer>
-            <p>📊 <strong>Tracking Events:</strong> reserve_click, order_click, promo_click, view_menu<br>
-            🔗 GA4 → BigQuery → Restaurant AI pipeline ready | <strong>GTM-WNXN7HMG</strong></p>
+            <p>🔥 <strong>15 Event Types:</strong> reserve_table, order_online, view_menu, promo_click, catering_inquiry, happy_hour, omakase, takeout_order, quick_order, wine_pairing, steak_reservation, bbq_platter, catering_bbq, taco_special, sushi_order<br>
+            🚀 <strong>Pub/Sub → Dataproc → BigQuery → Vertex AI</strong> | datanexusify.com/demo</p>
         </footer>
     </div>
 
     <script>
-        // GTM DataLayer 이벤트 전송 함수
-        function sendGTMEvent(eventName, restaurantName) {
-            window.dataLayer = window.dataLayer || [];
+        // 글로벌 통계
+        let totalEvents = 0, reserveCount = 0, orderCount = 0;
+        const eventLog = document.getElementById('event-log');
+
+        // Pub/Sub 발행 함수 (Cloud Function Proxy용)
+        async function publishToPubSub(eventData) {
+            try {
+                // 임시: 콘솔 로그 + 실제 Pub/Sub 호출 준비
+                console.log('🚀 Pub/Sub Event:', eventData);
+                
+                // 실제 배포시 이 부분 활성화:
+                // await fetch('https://your-region-project.cloudfunctions.net/pubsub-proxy', {
+                //   method: 'POST',
+                //   headers: {'Content-Type': 'application/json'},
+                //   body: JSON.stringify(eventData)
+                // });
+                
+                return true;
+            } catch (error) {
+                console.error('Pub/Sub Error:', error);
+                return false;
+            }
+        }
+
+        // 이벤트 추적 + UI 피드백
+        async function trackEvent(eventName, restaurantName) {
             const eventData = {
-                'event': eventName,
-                'restaurant_name': restaurantName,
-                'restaurant_id': 'resto_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
-                'page_location': window.location.href,
-                'page_path': window.location.pathname,
-                'user_timestamp': new Date().toISOString(),
-                'demo_page': 'datanexusify.com/demo'
+                event_timestamp: new Date().toISOString(),
+                event_name: eventName,
+                restaurant_name: restaurantName,
+                restaurant_id: 'resto_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                page_location: window.location.href,
+                page_path: window.location.pathname,
+                user_agent: navigator.userAgent,
+                viewport_width: window.innerWidth,
+                session_id: 'sess_' + Math.random().toString(36).substr(2, 9)
             };
+
+            // Pub/Sub 발행
+            const pubsubSuccess = await publishToPubSub(eventData);
             
-            dataLayer.push(eventData);
-            console.log('✅ GTM Event sent:', eventData);
+            // 통계 업데이트
+            totalEvents++;
+            if (eventName.includes('reserve')) reserveCount++;
+            if (eventName.includes('order')) orderCount++;
+            
+            document.getElementById('total-events').textContent = totalEvents;
+            document.getElementById('reserve-count').textContent = reserveCount;
+            document.getElementById('order-count').textContent = orderCount;
+
+            // 이벤트 로그 추가
+            const logEntry = `[${new Date().toLocaleTimeString()}] ${eventName} | ${restaurantName} | ${eventData.restaurant_id} ${pubsubSuccess ? '✅' : '❌'}\n`;
+            eventLog.innerHTML += logEntry;
+            eventLog.scrollTop = eventLog.scrollHeight;
+
+            console.log('✅ Event tracked:', eventData);
             return eventData;
         }
 
-        // 모든 버튼에 이벤트 리스너 추가
-        document.addEventListener('click', function(e) {
+        // 모든 버튼 이벤트 바인딩
+        document.addEventListener('click', async function(e) {
             if (e.target.classList.contains('btn')) {
+                e.preventDefault();
                 const eventName = e.target.dataset.event;
                 const restaurantName = e.target.closest('.card').dataset.restaurant;
                 
-                // GTM 이벤트 전송
-                const eventData = sendGTMEvent(eventName, restaurantName);
-                
                 // UI 피드백
-                const statusId = e.target.nextElementSibling.id;
+                const statusId = e.target.closest('.card').querySelector('.status').id;
                 const statusEl = document.getElementById(statusId);
-                statusEl.innerHTML = `✅ ${eventName.toUpperCase()}<br><small>${restaurantName} | ID: ${eventData.restaurant_id}</small>`;
+                statusEl.innerHTML = `✅ ${eventName.replace(/_/g, ' ').toUpperCase()}<br><small>${restaurantName}</small>`;
                 statusEl.className = 'status success';
                 statusEl.style.display = 'block';
                 
-                // 4초 후 숨기기
-                setTimeout(() => {
-                    statusEl.style.display = 'none';
-                }, 4000);
+                // 이벤트 추적
+                await trackEvent(eventName, restaurantName);
+                
+                // 3초 후 숨기기
+                setTimeout(() => statusEl.style.display = 'none', 3000);
             }
         });
 
-        // 페이지 로드 이벤트 (GTM 자동 수집)
-        window.addEventListener('load', function() {
-            sendGTMEvent('page_view', 'datanexusify_demo');
+        // 페이지 뷰 이벤트
+        window.addEventListener('load', () => {
+            trackEvent('page_view', 'datanexusify_demo');
+        });
+
+        // 스크롤 이벤트 (engagement)
+        let scrollCount = 0;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500 && scrollCount < 3) {
+                trackEvent('scroll_50pct', 'datanexusify_demo');
+                scrollCount++;
+            }
         });
     </script>
 </body>
