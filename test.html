@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Demo - GTM Event Tracking</title>
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MMCZKWXL');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Google tag (gtag.js) — hits routed through sGTM server -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PGMPRMZDMM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PGMPRMZDMM', {
+            server_container_url: 'https://gtm-server-524z4dboha-uw.a.run.app'
+        });
+    </script>
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -211,10 +214,6 @@
 </head>
 <body>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMCZKWXL"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <header>
     <span>🍽️</span>
@@ -276,12 +275,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     let cart = {};   // { id: { item, qty } }
 
-    // ── GTM / dataLayer helper ────────────────────────────────────────────────
-    window.dataLayer = window.dataLayer || [];
-
+    // ── GA4 event helper — routes through sGTM server ────────────────────────
     function pushEvent(eventName, payload) {
-        const data = { event: eventName, ...payload };
-        dataLayer.push(data);
+        gtag('event', eventName, payload);
         logEvent(eventName, payload);
     }
 
