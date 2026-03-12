@@ -3,249 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍽️ Restaurant AI Demo - datanexusify.com/demo</title>
+    <title>Restaurant Demo - GTM Event Tracking</title>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MMCZKWXL');</script>
+    <!-- End Google Tag Manager -->
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; color: #333; 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
         }
-        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
-        header { text-align: center; color: white; margin-bottom: 50px; }
-        h1 { font-size: 3.2em; margin-bottom: 10px; }
-        .stats { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; }
-        .stat-card { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 20px 30px; border-radius: 20px; text-align: center; }
-        .stat-number { font-size: 2.5em; font-weight: bold; color: #fff; }
-        .stat-label { color: rgba(255,255,255,0.9); font-size: 0.9em; }
-        .demo-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 25px; background: white; border-radius: 24px; padding: 40px; box-shadow: 0 25px 70px rgba(0,0,0,0.2); 
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .card { padding: 30px; border-radius: 20px; background: #f8f9fa; transition: all 0.3s; cursor: pointer; border: 3px solid transparent; position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(0,0,0,0.2); border-color: #667eea; }
-        .card h3 { color: #333; margin-bottom: 15px; font-size: 1.6em; }
-        .card p { color: #666; margin-bottom: 20px; }
-        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn { 
-            padding: 12px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; cursor: pointer; 
-            transition: all 0.3s; border: none; flex: 1; min-width: 120px;
+        header h1 { font-size: 1.4em; }
+        header span { font-size: 1.6em; }
+
+        /* Layout */
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 24px;
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 24px;
         }
-        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-        .btn-success { background: linear-gradient(135deg, #4caf50, #45a049); color: white; }
-        .btn-warning { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
-        .btn-danger { background: linear-gradient(135deg, #f44336, #d32f2f); color: white; }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .status { margin-top: 15px; padding: 12px; border-radius: 12px; font-weight: 600; display: none; text-align: center; }
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .pubsub-status { background: #e3f2fd; color: #1565c0; padding: 20px; border-radius: 16px; margin: 30px 0; text-align: center; font-weight: 600; }
-        .event-log { background: #f1f3f4; padding: 20px; border-radius: 12px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px; }
-        footer { text-align: center; margin-top: 60px; color: white; opacity: 0.9; font-size: 14px; }
-        @media (max-width: 768px) { .demo-grid { grid-template-columns: 1fr; padding: 20px; } }
+
+        /* Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            font-size: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f0e8;
+        }
+
+        .card-body { padding: 14px; }
+        .card-name { font-weight: 700; font-size: 1em; margin-bottom: 4px; }
+        .card-desc { font-size: 0.82em; color: #666; margin-bottom: 12px; line-height: 1.4; }
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .price { font-weight: 700; color: #667eea; font-size: 1.1em; }
+
+        .btn-add {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 7px 14px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-add:hover { background: #5566d4; }
+        .btn-add.added {
+            background: #4caf50;
+        }
+
+        /* Cart sidebar */
+        .sidebar { position: sticky; top: 24px; align-self: start; }
+
+        .cart-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .cart-box h2 { font-size: 1em; font-weight: 700; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        .cart-items { min-height: 60px; }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 0.88em;
+        }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item-name { flex: 1; }
+        .cart-item-qty { color: #666; margin: 0 8px; }
+        .cart-item-price { font-weight: 600; }
+        .btn-remove { background: none; border: none; color: #e53935; cursor: pointer; font-size: 1em; padding: 0 4px; }
+
+        .cart-empty { color: #aaa; font-size: 0.88em; text-align: center; padding: 12px 0; }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #eee;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: opacity 0.2s;
+        }
+        .btn-checkout:hover { opacity: 0.9; }
+        .btn-checkout:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* Event log */
+        .event-log { background: #1e1e1e; border-radius: 12px; padding: 16px; }
+        .event-log h2 { color: #ccc; font-size: 0.85em; font-weight: 600; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        #log-list {
+            list-style: none;
+            max-height: 260px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.75em;
+        }
+        #log-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+            color: #a0aec0;
+            word-break: break-all;
+        }
+        #log-list li:last-child { border-bottom: none; }
+        .log-event { color: #79c0ff; font-weight: 700; }
+        .log-time { color: #555; margin-right: 6px; }
+
+        /* Purchase modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal h2 { font-size: 1.4em; margin-bottom: 8px; }
+        .modal p { color: #666; margin-bottom: 20px; }
+        .modal .success-icon { font-size: 3em; margin-bottom: 12px; }
+        .btn-close {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 28px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍽️ Restaurant AI Event Tracker</h1>
-            <p><strong>datanexusify.com/demo</strong> | 20 Restaurants | 15 Event Types | Pub/Sub Ready</p>
-        </header>
 
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-number" id="total-events">0</div>
-                <div class="stat-label">Total Events</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="reserve-count">0</div>
-                <div class="stat-label">Reservations</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="order-count">0</div>
-                <div class="stat-label">Orders</div>
-            </div>
-        </div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMCZKWXL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-        <div class="pubsub-status">
-            🚀 <strong>Pub/Sub Pipeline Ready</strong> | restaurant-events topic | Spark Streaming → BigQuery
-        </div>
+<header>
+    <span>🍽️</span>
+    <h1>Restaurant AI Marketing — GTM Demo</h1>
+</header>
 
-        <div class="demo-grid">
-            <!-- Burger Joint -->
-            <div class="card" data-restaurant="Burger Joint">
-                <h3>🍔 Burger Joint</h3>
-                <p>Classic American burgers & fries</p>
-                <div class="btn-group">
-                    <button class="btn btn-primary" data-event="reserve_table">Reserve Table</button>
-                    <button class="btn btn-success" data-event="order_online">Order Online</button>
-                    <button class="btn btn-warning" data-event="view_menu">View Menu</button>
-                </div>
-                <div class="status" id="burger-status"></div>
-            </div>
-
-            <!-- Pizza Place -->
-            <div class="card" data-restaurant="Pizza Place">
-                <h3>🍕 Pizza Place</h3>
-                <p>Neapolitan wood-fired pizza</p>
-                <div class="btn-group">
-                    <button class="btn btn-primary" data-event="reserve_table">Reserve</button>
-                    <button class="btn btn-success" data-event="order_takeout">Takeout Order</button>
-                    <button class="btn btn-danger" data-event="promo_click">20% Off</button>
-                </div>
-                <div class="status" id="pizza-status"></div>
-            </div>
-
-            <!-- Sushi Spot -->
-            <div class="card" data-restaurant="Sushi Spot">
-                <h3>🍣 Sushi Spot</h3>
-                <p>Fresh sushi & sashimi daily</p>
-                <div class="btn-group">
-                    <button class="btn btn-primary" data-event="reserve_omakase">Omakase</button>
-                    <button class="btn btn-success" data-event="sushi_order">Sushi Order</button>
-                    <button class="btn btn-warning" data-event="happy_hour">Happy Hour</button>
-                </div>
-                <div class="status" id="sushi-status"></div>
-            </div>
-
-            <!-- Taco Truck -->
-            <div class="card" data-restaurant="Taco Truck">
-                <h3>🌮 Taco Truck</h3>
-                <p>Street tacos & margaritas</p>
-                <div class="btn-group">
-                    <button class="btn btn-success" data-event="quick_order">Quick Order</button>
-                    <button class="btn btn-warning" data-event="taco_special">Taco Tuesday</button>
-                    <button class="btn btn-primary" data-event="catering_inquiry">Catering</button>
-                </div>
-                <div class="status" id="taco-status"></div>
-            </div>
-
-            <!-- 더 많은 레스토랑들... -->
-            <div class="card" data-restaurant="Steak House">
-                <h3>🥩 Steak House</h3>
-                <p>Prime dry-aged steaks</p>
-                <div class="btn-group">
-                    <button class="btn btn-primary" data-event="steak_reservation">Reserve</button>
-                    <button class="btn btn-success" data-event="wine_pairing">Wine Pairing</button>
-                </div>
-                <div class="status" id="steak-status"></div>
-            </div>
-
-            <div class="card" data-restaurant="BBQ Joint">
-                <h3>🍖 BBQ Joint</h3>
-                <p>Slow-smoked meats</p>
-                <div class="btn-group">
-                    <button class="btn btn-success" data-event="bbq_platter">Platter Order</button>
-                    <button class="btn btn-warning" data-event="catering_bbq">Catering</button>
-                </div>
-                <div class="status" id="bbq-status"></div>
-            </div>
-        </div>
-
-        <div class="event-log" id="event-log">
-            <strong>📊 Real-time Event Log (Pub/Sub → Spark → BigQuery)</strong><br><br>
-        </div>
-
-        <footer>
-            <p>🔥 <strong>15 Event Types:</strong> reserve_table, order_online, view_menu, promo_click, catering_inquiry, happy_hour, omakase, takeout_order, quick_order, wine_pairing, steak_reservation, bbq_platter, catering_bbq, taco_special, sushi_order<br>
-            🚀 <strong>Pub/Sub → Dataproc → BigQuery → Vertex AI</strong> | datanexusify.com/demo</p>
-        </footer>
+<div class="layout">
+    <!-- Menu -->
+    <div>
+        <div class="menu-grid" id="menu"></div>
     </div>
 
-    <script>
-        // 글로벌 통계
-        let totalEvents = 0, reserveCount = 0, orderCount = 0;
-        const eventLog = document.getElementById('event-log');
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="cart-box">
+            <h2>🛒 Cart</h2>
+            <div class="cart-items" id="cart-items">
+                <p class="cart-empty">Your cart is empty</p>
+            </div>
+            <div class="cart-total" id="cart-total" style="display:none">
+                <span>Total</span>
+                <span id="total-price">$0.00</span>
+            </div>
+            <button class="btn-checkout" id="btn-checkout" disabled onclick="checkout()">
+                Checkout
+            </button>
+        </div>
 
-        // Pub/Sub 발행 함수 (Cloud Function Proxy용)
-        async function publishToPubSub(eventData) {
-            try {
-                // 임시: 콘솔 로그 + 실제 Pub/Sub 호출 준비
-                console.log('🚀 Pub/Sub Event:', eventData);
-                
-                // 실제 배포시 이 부분 활성화:
-                // await fetch('https://your-region-project.cloudfunctions.net/pubsub-proxy', {
-                //   method: 'POST',
-                //   headers: {'Content-Type': 'application/json'},
-                //   body: JSON.stringify(eventData)
-                // });
-                
-                return true;
-            } catch (error) {
-                console.error('Pub/Sub Error:', error);
-                return false;
-            }
+        <!-- Event Log -->
+        <div class="event-log">
+            <h2>📡 dataLayer Events</h2>
+            <ul id="log-list">
+                <li><span class="log-time">--:--:--</span>Waiting for events...</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Purchase success modal -->
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <div class="success-icon">✅</div>
+        <h2>Order Placed!</h2>
+        <p id="modal-msg">Thank you for your order.</p>
+        <button class="btn-close" onclick="closeModal()">Continue Shopping</button>
+    </div>
+</div>
+
+<script>
+    // ── Menu data ─────────────────────────────────────────────────────────────
+    const MENU = [
+        { id: 'p1', name: 'Signature Burger',   emoji: '🍔', price: 14.90, category: 'Main' },
+        { id: 'p2', name: 'Truffle Pasta',       emoji: '🍝', price: 18.50, category: 'Main' },
+        { id: 'p3', name: 'Crispy Calamari',     emoji: '🦑', price: 11.00, category: 'Starter' },
+        { id: 'p4', name: 'Caesar Salad',        emoji: '🥗', price: 9.90,  category: 'Starter' },
+        { id: 'p5', name: 'Grilled Salmon',      emoji: '🐟', price: 22.00, category: 'Main' },
+        { id: 'p6', name: 'Chocolate Lava Cake', emoji: '🍫', price: 7.50,  category: 'Dessert' },
+    ];
+
+    let cart = {};   // { id: { item, qty } }
+
+    // ── GTM / dataLayer helper ────────────────────────────────────────────────
+    window.dataLayer = window.dataLayer || [];
+
+    function pushEvent(eventName, payload) {
+        const data = { event: eventName, ...payload };
+        dataLayer.push(data);
+        logEvent(eventName, payload);
+    }
+
+    // ── Event log UI ──────────────────────────────────────────────────────────
+    function logEvent(eventName, payload) {
+        const list = document.getElementById('log-list');
+        // Remove the placeholder on first real event
+        if (list.children.length === 1 && list.children[0].textContent.includes('Waiting')) {
+            list.innerHTML = '';
+        }
+        const now = new Date().toLocaleTimeString('en-GB', { hour12: false });
+        const li = document.createElement('li');
+        const detail = JSON.stringify(payload).slice(0, 80);
+        li.innerHTML = `<span class="log-time">${now}</span><span class="log-event">${eventName}</span> ${detail}`;
+        list.prepend(li);
+    }
+
+    // ── Render menu ───────────────────────────────────────────────────────────
+    function renderMenu() {
+        const container = document.getElementById('menu');
+        container.innerHTML = MENU.map(item => `
+            <div class="card" id="card-${item.id}" onclick="viewItem('${item.id}')">
+                <div class="card-img">${item.emoji}</div>
+                <div class="card-body">
+                    <div class="card-name">${item.name}</div>
+                    <div class="card-desc">${item.category} · Made fresh daily</div>
+                    <div class="card-footer">
+                        <span class="price">$${item.price.toFixed(2)}</span>
+                        <button class="btn-add" id="btn-${item.id}"
+                            onclick="event.stopPropagation(); addToCart('${item.id}')">
+                            + Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ── Events ────────────────────────────────────────────────────────────────
+    function viewItem(id) {
+        const item = MENU.find(m => m.id === id);
+        pushEvent('view_item', {
+            currency: 'USD',
+            value: item.price,
+            items: [{ item_id: item.id, item_name: item.name, price: item.price, item_category: item.category }]
+        });
+    }
+
+    function addToCart(id) {
+        const item = MENU.find(m => m.id === id);
+        if (cart[id]) {
+            cart[id].qty += 1;
+        } else {
+            cart[id] = { item, qty: 1 };
         }
 
-        // 이벤트 추적 + UI 피드백
-        async function trackEvent(eventName, restaurantName) {
-            const eventData = {
-                event_timestamp: new Date().toISOString(),
-                event_name: eventName,
-                restaurant_name: restaurantName,
-                restaurant_id: 'resto_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
-                page_location: window.location.href,
-                page_path: window.location.pathname,
-                user_agent: navigator.userAgent,
-                viewport_width: window.innerWidth,
-                session_id: 'sess_' + Math.random().toString(36).substr(2, 9)
-            };
+        // Visual feedback
+        const btn = document.getElementById(`btn-${id}`);
+        btn.textContent = `✓ ${cart[id].qty}`;
+        btn.classList.add('added');
 
-            // Pub/Sub 발행
-            const pubsubSuccess = await publishToPubSub(eventData);
-            
-            // 통계 업데이트
-            totalEvents++;
-            if (eventName.includes('reserve')) reserveCount++;
-            if (eventName.includes('order')) orderCount++;
-            
-            document.getElementById('total-events').textContent = totalEvents;
-            document.getElementById('reserve-count').textContent = reserveCount;
-            document.getElementById('order-count').textContent = orderCount;
+        pushEvent('add_to_cart', {
+            currency: 'USD',
+            value: item.price,
+            items: [{ item_id: item.id, item_name: item.name, price: item.price, quantity: cart[id].qty }]
+        });
 
-            // 이벤트 로그 추가
-            const logEntry = `[${new Date().toLocaleTimeString()}] ${eventName} | ${restaurantName} | ${eventData.restaurant_id} ${pubsubSuccess ? '✅' : '❌'}\n`;
-            eventLog.innerHTML += logEntry;
-            eventLog.scrollTop = eventLog.scrollHeight;
+        renderCart();
+    }
 
-            console.log('✅ Event tracked:', eventData);
-            return eventData;
+    function removeFromCart(id) {
+        delete cart[id];
+        const btn = document.getElementById(`btn-${id}`);
+        if (btn) { btn.textContent = '+ Add'; btn.classList.remove('added'); }
+        renderCart();
+    }
+
+    function renderCart() {
+        const container = document.getElementById('cart-items');
+        const totalEl   = document.getElementById('cart-total');
+        const totalPrice = document.getElementById('total-price');
+        const checkoutBtn = document.getElementById('btn-checkout');
+
+        const entries = Object.values(cart);
+        if (entries.length === 0) {
+            container.innerHTML = '<p class="cart-empty">Your cart is empty</p>';
+            totalEl.style.display = 'none';
+            checkoutBtn.disabled = true;
+            return;
         }
 
-        // 모든 버튼 이벤트 바인딩
-        document.addEventListener('click', async function(e) {
-            if (e.target.classList.contains('btn')) {
-                e.preventDefault();
-                const eventName = e.target.dataset.event;
-                const restaurantName = e.target.closest('.card').dataset.restaurant;
-                
-                // UI 피드백
-                const statusId = e.target.closest('.card').querySelector('.status').id;
-                const statusEl = document.getElementById(statusId);
-                statusEl.innerHTML = `✅ ${eventName.replace(/_/g, ' ').toUpperCase()}<br><small>${restaurantName}</small>`;
-                statusEl.className = 'status success';
-                statusEl.style.display = 'block';
-                
-                // 이벤트 추적
-                await trackEvent(eventName, restaurantName);
-                
-                // 3초 후 숨기기
-                setTimeout(() => statusEl.style.display = 'none', 3000);
-            }
-        });
+        const total = entries.reduce((s, e) => s + e.item.price * e.qty, 0);
+        container.innerHTML = entries.map(({ item, qty }) => `
+            <div class="cart-item">
+                <span class="cart-item-name">${item.emoji} ${item.name}</span>
+                <span class="cart-item-qty">×${qty}</span>
+                <span class="cart-item-price">$${(item.price * qty).toFixed(2)}</span>
+                <button class="btn-remove" onclick="removeFromCart('${item.id}')">✕</button>
+            </div>
+        `).join('');
 
-        // 페이지 뷰 이벤트
-        window.addEventListener('load', () => {
-            trackEvent('page_view', 'datanexusify_demo');
-        });
+        totalEl.style.display = 'flex';
+        totalPrice.textContent = `$${total.toFixed(2)}`;
+        checkoutBtn.disabled = false;
+    }
 
-        // 스크롤 이벤트 (engagement)
-        let scrollCount = 0;
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500 && scrollCount < 3) {
-                trackEvent('scroll_50pct', 'datanexusify_demo');
-                scrollCount++;
-            }
-        });
-    </script>
+    function checkout() {
+        const entries = Object.values(cart);
+        const total   = entries.reduce((s, e) => s + e.item.price * e.qty, 0);
+        const items   = entries.map(({ item, qty }) => ({
+            item_id:       item.id,
+            item_name:     item.name,
+            price:         item.price,
+            quantity:      qty,
+            item_category: item.category
+        }));
+
+        // begin_checkout
+        pushEvent('begin_checkout', { currency: 'USD', value: total, items });
+
+        // Simulate payment delay → purchase
+        setTimeout(() => {
+            const transactionId = 'TXN-' + Date.now();
+            pushEvent('purchase', {
+                transaction_id: transactionId,
+                currency:       'USD',
+                value:          total,
+                tax:            +(total * 0.08).toFixed(2),
+                items
+            });
+
+            document.getElementById('modal-msg').textContent =
+                `Transaction ${transactionId} · Total $${total.toFixed(2)}`;
+            document.getElementById('modal').classList.add('show');
+
+            // Reset cart
+            cart = {};
+            document.querySelectorAll('.btn-add').forEach(b => {
+                b.textContent = '+ Add';
+                b.classList.remove('added');
+            });
+            renderCart();
+        }, 800);
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('show');
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    renderMenu();
+
+    // Fire page_view on load
+    pushEvent('page_view', {
+        page_title:    'Restaurant Menu',
+        page_location: window.location.href,
+        restaurant_id: 'restaurant_demo_01'
+    });
+</script>
 </body>
 </html>
