@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Demo - GTM Event Tracking</title>
+    <title>Seoul Restaurant - Korean Restaurant in Tijuana</title>
 
     <!-- Google tag (gtag.js) — hits routed through sGTM server -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PGMPRMZDMM"></script>
@@ -17,425 +17,1126 @@
     </script>
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            color: #333;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --accent: #8B1A1A;
+            --accent-light: #C0392B;
+            --accent-hover: #A93226;
+            --bg-cream: #FFF8F0;
+            --bg-warm: #FAF0E6;
+            --bg-white: #FFFFFF;
+            --text-primary: #2C2C2C;
+            --text-secondary: #5A5A5A;
+            --text-muted: #888888;
+            --border: #E8DDD0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --star-color: #F0A500;
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px 32px;
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-hover); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 460px;
+            background: url('photos/0000_front_other_AF1QipN8e_SuWvMDEFCt.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: flex-end;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30,10,10,0.85) 0%, rgba(30,10,10,0.3) 50%, rgba(0,0,0,0.1) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            color: #fff;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .hero-type {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+        .hero-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+        .hero-rating .stars { color: var(--star-color); font-size: 1.2rem; letter-spacing: 2px; }
+        .hero-rating .rating-num { font-weight: 700; font-size: 1.3rem; }
+        .hero-rating .review-count { opacity: 0.8; }
+
+        /* Info Bar */
+        .info-bar {
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: var(--shadow-sm);
+        }
+        .info-bar-inner {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            font-size: 0.92rem;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .info-item svg { width: 16px; height: 16px; fill: var(--accent); flex-shrink: 0; }
+        .badge-open {
+            background: #27AE60;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge-closed {
+            background: var(--accent);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .info-link { cursor: pointer; }
+        .info-link:hover { text-decoration: underline; }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* Gallery */
+        .gallery-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .gallery-tab {
+            padding: 8px 20px;
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            background: var(--bg-white);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+        }
+        .gallery-tab:hover { border-color: var(--accent); color: var(--accent); }
+        .gallery-tab.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 10px;
+        }
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            background: var(--border);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+            display: block;
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .btn-load-more {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 36px;
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            background: transparent;
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-load-more:hover { background: var(--accent); color: #fff; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0,0,0,0.92);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            opacity: 0.8;
+            z-index: 201;
+        }
+        .lightbox-close:hover { opacity: 1; }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            z-index: 201;
+        }
+        .lightbox-nav:hover { opacity: 1; background: rgba(255,255,255,0.2); }
+        .lightbox-prev { left: 16px; }
+        .lightbox-next { right: 16px; }
+
+        /* Reviews */
+        .rating-summary {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-bottom: 28px;
+            padding: 24px;
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+        .rating-big {
+            text-align: center;
+            min-width: 100px;
+        }
+        .rating-big .num { font-size: 3rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+        .rating-big .stars { color: var(--star-color); font-size: 1.1rem; margin: 6px 0 4px; letter-spacing: 1px; }
+        .rating-big .count { font-size: 0.85rem; color: var(--text-muted); }
+        .rating-bars { flex: 1; }
+        .rating-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+        }
+        .rating-bar-row .label { width: 24px; text-align: right; font-weight: 600; color: var(--text-secondary); }
+        .rating-bar-track {
+            flex: 1;
+            height: 10px;
+            background: #EDE7DF;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .rating-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: var(--star-color);
+            transition: width 0.6s ease-out;
+        }
+        .rating-bar-row .bar-count { width: 30px; font-size: 0.8rem; color: var(--text-muted); }
+
+        .review-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .review-header {
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-bottom: 10px;
         }
-        header h1 { font-size: 1.4em; }
-        header span { font-size: 1.6em; }
-
-        /* Layout */
-        .layout {
-            display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 24px;
-            max-width: 1200px;
-            margin: 24px auto;
-            padding: 0 24px;
+        .review-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--border);
         }
+        .review-author { font-weight: 600; font-size: 0.95rem; }
+        .review-meta { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-muted); }
+        .review-meta .stars { color: var(--star-color); letter-spacing: 1px; }
+        .review-text { font-size: 0.93rem; color: var(--text-secondary); line-height: 1.65; margin-top: 4px; }
 
-        /* Menu */
-        .menu-grid {
+        /* About / Amenities */
+        .amenities-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 16px;
         }
+        .amenity-card {
+            background: var(--bg-white);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+        .amenity-card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .amenity-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .amenity-tag {
+            padding: 5px 12px;
+            background: var(--bg-warm);
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
 
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        /* Hours & Location */
+        .hours-location {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .hours-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .hours-table tr:last-child td { border-bottom: none; }
+        .hours-table .day { font-weight: 600; color: var(--text-primary); }
+        .hours-table .time { color: var(--text-secondary); text-align: right; }
+        .hours-table tr.today { background: #FFF3E0; border-radius: var(--radius-sm); }
+        .map-embed {
+            border-radius: var(--radius);
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow-md);
+            height: 100%;
+            min-height: 320px;
+        }
+        .map-embed iframe { width: 100%; height: 100%; border: 0; min-height: 320px; }
+
+        /* Reserve CTA */
+        .cta-reserve {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            font-size: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8f0e8;
-        }
-
-        .card-body { padding: 14px; }
-        .card-name { font-weight: 700; font-size: 1em; margin-bottom: 4px; }
-        .card-desc { font-size: 0.82em; color: #666; margin-bottom: 12px; line-height: 1.4; }
-        .card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .price { font-weight: 700; color: #667eea; font-size: 1.1em; }
-
-        .btn-add {
-            background: #667eea;
-            color: white;
             border: none;
-            border-radius: 8px;
-            padding: 7px 14px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: 600;
             transition: background 0.2s;
+            margin-top: 20px;
         }
-        .btn-add:hover { background: #5566d4; }
-        .btn-add.added {
-            background: #4caf50;
-        }
+        .cta-reserve:hover { background: var(--accent-hover); color: #fff; }
 
-        /* Cart sidebar */
-        .sidebar { position: sticky; top: 24px; align-self: start; }
-
-        .cart-box {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-        .cart-box h2 { font-size: 1em; font-weight: 700; margin-bottom: 14px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-
-        .cart-items { min-height: 60px; }
-        .cart-item {
+        /* Sidebar Event Log */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            max-height: calc(100vh - 100px);
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+        .event-log-panel {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 110px);
+        }
+        .event-log-header {
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--accent), #5C1010);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f5f5f5;
-            font-size: 0.88em;
-        }
-        .cart-item:last-child { border-bottom: none; }
-        .cart-item-name { flex: 1; }
-        .cart-item-qty { color: #666; margin: 0 8px; }
-        .cart-item-price { font-weight: 600; }
-        .btn-remove { background: none; border: none; color: #e53935; cursor: pointer; font-size: 1em; padding: 0 4px; }
-
-        .cart-empty { color: #aaa; font-size: 0.88em; text-align: center; padding: 12px 0; }
-
-        .cart-total {
-            display: flex;
             justify-content: space-between;
-            font-weight: 700;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 2px solid #eee;
         }
-
-        .btn-checkout {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 13px;
-            font-size: 1em;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 14px;
-            transition: opacity 0.2s;
+        .event-log-header .dot {
+            width: 8px;
+            height: 8px;
+            background: #2ECC71;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            animation: pulse 1.5s infinite;
         }
-        .btn-checkout:hover { opacity: 0.9; }
-        .btn-checkout:disabled { opacity: 0.4; cursor: not-allowed; }
-
-        /* Event log */
-        .event-log { background: #1e1e1e; border-radius: 12px; padding: 16px; }
-        .event-log h2 { color: #ccc; font-size: 0.85em; font-weight: 600; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
-
-        #log-list {
-            list-style: none;
-            max-height: 260px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .event-log-body {
+            flex: 1;
             overflow-y: auto;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.75em;
+            padding: 10px;
+            font-size: 0.78rem;
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
         }
-        #log-list li {
-            padding: 5px 0;
-            border-bottom: 1px solid #333;
-            color: #a0aec0;
-            word-break: break-all;
+        .event-entry {
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            background: #F9F5F0;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+            word-break: break-word;
         }
-        #log-list li:last-child { border-bottom: none; }
-        .log-event { color: #79c0ff; font-weight: 700; }
-        .log-time { color: #555; margin-right: 6px; }
-
-        /* Purchase modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
+        .event-entry .event-name {
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 2px;
         }
-        .modal-overlay.show { display: flex; }
-        .modal {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
+        .event-entry .event-time { color: var(--text-muted); font-size: 0.72rem; }
+        .event-entry .event-payload { color: var(--text-secondary); margin-top: 3px; }
+        .event-log-count {
+            font-size: 0.72rem;
+            opacity: 0.8;
+            font-weight: 400;
         }
-        .modal h2 { font-size: 1.4em; margin-bottom: 8px; }
-        .modal p { color: #666; margin-bottom: 20px; }
-        .modal .success-icon { font-size: 3em; margin-bottom: 12px; }
-        .btn-close {
-            background: #667eea;
-            color: white;
+        .event-log-clear {
+            background: rgba(255,255,255,0.2);
             border: none;
-            border-radius: 8px;
-            padding: 10px 28px;
+            color: #fff;
+            font-size: 0.75rem;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .event-log-clear:hover { background: rgba(255,255,255,0.3); }
+
+        /* Footer */
+        footer {
+            background: #1A0A0A;
+            color: #CCC;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 40px;
+        }
+        footer a { color: #E8A0A0; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar { display: none; }
+            .hero { height: 340px; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hours-location {
+                grid-template-columns: 1fr;
+            }
+            .rating-summary {
+                flex-direction: column;
+                text-align: center;
+            }
+            .info-bar-inner {
+                gap: 12px;
+                font-size: 0.84rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .hero { height: 280px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content { padding: 24px 16px; }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                gap: 6px;
+            }
+            .amenities-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-
-<header>
-    <span>🍽️</span>
-    <h1>Restaurant AI Marketing — GTM Demo</h1>
-</header>
-
-<div class="layout">
-    <!-- Menu -->
-    <div>
-        <div class="menu-grid" id="menu"></div>
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-type">Korean Restaurant</div>
+        <h1>Seoul Restaurant</h1>
+        <div class="hero-rating">
+            <span class="rating-num">4.3</span>
+            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="review-count">(432 reviews)</span>
+            <span style="margin-left:8px;opacity:0.7;">$$</span>
+        </div>
     </div>
+</section>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="cart-box">
-            <h2>🛒 Cart</h2>
-            <div class="cart-items" id="cart-items">
-                <p class="cart-empty">Your cart is empty</p>
+<!-- Info Bar -->
+<div class="info-bar">
+    <div class="info-bar-inner">
+        <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+            <a href="https://www.google.com/maps/place/Seoul+Restaurant/@32.5215488,-117.02666889999999,14z/data=!4m8!1m2!2m1!1sSeoul+Restaurant!3m4!1s0x80d94921afbb61af:0x2ad1f03f45200376!8m2!3d32.5215488!4d-117.02666889999999"
+               target="_blank" class="info-link" onclick="pushEvent('click_directions',{restaurant_id:'seoul_restaurant'})">
+                Fresnillo 2305, Madero Sur, 22040 Tijuana, B.C., Mexico
+            </a>
+        </div>
+        <div class="info-item">
+            <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.01-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.1.31.03.66-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+526645357280" class="info-link" onclick="pushEvent('click_phone',{phone:'+52 664 535 7280',restaurant_id:'seoul_restaurant'})">
+                +52 664 535 7280
+            </a>
+        </div>
+        <div class="info-item" id="open-status-bar"></div>
+        <div class="info-item" style="font-weight:600;">$$</div>
+    </div>
+</div>
+
+<!-- Main Layout -->
+<div class="main-layout">
+    <main>
+        <!-- Photo Gallery -->
+        <section class="section" id="gallery">
+            <h2 class="section-title">Photos</h2>
+            <div class="gallery-tabs" id="gallery-tabs">
+                <button class="gallery-tab active" data-tab="all">All (90)</button>
+                <button class="gallery-tab" data-tab="food">Food (60)</button>
+                <button class="gallery-tab" data-tab="front">Front (15)</button>
+                <button class="gallery-tab" data-tab="menu">Menu (15)</button>
             </div>
-            <div class="cart-total" id="cart-total" style="display:none">
-                <span>Total</span>
-                <span id="total-price">$0.00</span>
+            <div class="gallery-grid" id="gallery-grid"></div>
+            <button class="btn-load-more" id="gallery-load-more" style="display:none;">Load More</button>
+        </section>
+
+        <!-- Reviews -->
+        <section class="section" id="reviews-section">
+            <h2 class="section-title">Reviews</h2>
+            <div class="rating-summary">
+                <div class="rating-big">
+                    <div class="num">4.3</div>
+                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+                    <div class="count">432 reviews</div>
+                </div>
+                <div class="rating-bars" id="rating-bars"></div>
             </div>
-            <button class="btn-checkout" id="btn-checkout" disabled onclick="checkout()">
-                Checkout
+            <div id="reviews-list"></div>
+            <button class="btn-load-more" id="reviews-load-more" style="display:none;">Load More Reviews</button>
+        </section>
+
+        <!-- About / Amenities -->
+        <section class="section" id="about">
+            <h2 class="section-title">About</h2>
+            <div class="amenities-grid">
+                <div class="amenity-card">
+                    <h3>Service Options</h3>
+                    <div class="amenity-tags">
+                        <span class="amenity-tag">Delivery</span>
+                        <span class="amenity-tag">Dine-in</span>
+                        <span class="amenity-tag">Outdoor seating</span>
+                        <span class="amenity-tag">Takeout</span>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <h3>Amenities</h3>
+                    <div class="amenity-tags">
+                        <span class="amenity-tag">Bar onsite</span>
+                        <span class="amenity-tag">Restroom</span>
+                        <span class="amenity-tag">Wi-Fi</span>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <h3>Atmosphere</h3>
+                    <div class="amenity-tags">
+                        <span class="amenity-tag">Casual</span>
+                        <span class="amenity-tag">Cozy</span>
+                        <span class="amenity-tag">Quiet</span>
+                        <span class="amenity-tag">Trendy</span>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <h3>Offerings</h3>
+                    <div class="amenity-tags">
+                        <span class="amenity-tag">Alcohol</span>
+                        <span class="amenity-tag">Beer</span>
+                        <span class="amenity-tag">Coffee</span>
+                        <span class="amenity-tag">Quick bite</span>
+                        <span class="amenity-tag">Small plates</span>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <h3>Parking</h3>
+                    <div class="amenity-tags">
+                        <span class="amenity-tag">Free street parking</span>
+                        <span class="amenity-tag">Valet parking</span>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <h3>Extras</h3>
+                    <div class="amenity-tags">
+                        <span class="amenity-tag">Accepts reservations</span>
+                        <span class="amenity-tag">Dogs allowed</span>
+                    </div>
+                </div>
+            </div>
+            <button class="cta-reserve" onclick="pushEvent('click_reserve',{restaurant_id:'seoul_restaurant'})">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+                Make a Reservation
             </button>
-        </div>
+        </section>
 
-        <!-- Event Log -->
-        <div class="event-log">
-            <h2>📡 dataLayer Events</h2>
-            <ul id="log-list">
-                <li><span class="log-time">--:--:--</span>Waiting for events...</li>
-            </ul>
+        <!-- Hours & Location -->
+        <section class="section" id="location">
+            <h2 class="section-title">Hours &amp; Location</h2>
+            <div class="hours-location">
+                <div>
+                    <table class="hours-table" id="hours-table">
+                        <tbody>
+                        <tr data-day="1"><td class="day">Monday</td><td class="time">Closed</td></tr>
+                        <tr data-day="2"><td class="day">Tuesday</td><td class="time">2:00 PM - 9:00 PM</td></tr>
+                        <tr data-day="3"><td class="day">Wednesday</td><td class="time">2:00 PM - 9:00 PM</td></tr>
+                        <tr data-day="4"><td class="day">Thursday</td><td class="time">2:00 PM - 9:00 PM</td></tr>
+                        <tr data-day="5"><td class="day">Friday</td><td class="time">2:00 PM - 10:00 PM</td></tr>
+                        <tr data-day="6"><td class="day">Saturday</td><td class="time">1:00 PM - 10:00 PM</td></tr>
+                        <tr data-day="0"><td class="day">Sunday</td><td class="time">1:00 PM - 10:00 PM</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="map-embed">
+                    <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-117.02666889999999!3d32.5215488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d94921afbb61af%3A0x2ad1f03f45200376!2sSeoul%20Restaurant!5e0!3m2!1sen!2smx!4v1700000000000!5m2!1sen!2smx"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Seoul Restaurant map"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar Event Log -->
+    <aside class="sidebar">
+        <div class="event-log-panel">
+            <div class="event-log-header">
+                <span><span class="dot"></span> GTM Event Log <span class="event-log-count" id="event-count">(0)</span></span>
+                <button class="event-log-clear" onclick="clearLog()">Clear</button>
+            </div>
+            <div class="event-log-body" id="event-log"></div>
         </div>
-    </div>
+    </aside>
 </div>
 
-<!-- Purchase success modal -->
-<div class="modal-overlay" id="modal">
-    <div class="modal">
-        <div class="success-icon">✅</div>
-        <h2>Order Placed!</h2>
-        <p id="modal-msg">Thank you for your order.</p>
-        <button class="btn-close" onclick="closeModal()">Continue Shopping</button>
-    </div>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
+    <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
+    <img src="" alt="Photo" id="lightbox-img">
 </div>
+
+<footer>
+    <div class="container">
+        <p>Seoul Restaurant &mdash; Fresnillo 2305, Madero Sur, 22040 Tijuana, B.C., Mexico</p>
+        <p style="margin-top:6px;"><a href="https://www.google.com/maps/place/Seoul+Restaurant/@32.5215488,-117.02666889999999,14z/data=!4m8!1m2!2m1!1sSeoul+Restaurant!3m4!1s0x80d94921afbb61af:0x2ad1f03f45200376!8m2!3d32.5215488!4d-117.02666889999999" target="_blank" onclick="pushEvent('click_directions',{restaurant_id:'seoul_restaurant'})">View on Google Maps</a></p>
+    </div>
+</footer>
 
 <script>
-    // ── Menu data ─────────────────────────────────────────────────────────────
-    const MENU = [
-        { id: 'p1', name: 'Signature Burger',   emoji: '🍔', price: 14.90, category: 'Main' },
-        { id: 'p2', name: 'Truffle Pasta',       emoji: '🍝', price: 18.50, category: 'Main' },
-        { id: 'p3', name: 'Crispy Calamari',     emoji: '🦑', price: 11.00, category: 'Starter' },
-        { id: 'p4', name: 'Caesar Salad',        emoji: '🥗', price: 9.90,  category: 'Starter' },
-        { id: 'p5', name: 'Grilled Salmon',      emoji: '🐟', price: 22.00, category: 'Main' },
-        { id: 'p6', name: 'Chocolate Lava Cake', emoji: '🍫', price: 7.50,  category: 'Dessert' },
+    // =========================================
+    // DATA
+    // =========================================
+
+    const PHOTOS = [
+        {file:"0000_front_other_AF1QipN8e_SuWvMDEFCt.jpg",tag:"front"},
+        {file:"0001_food_CIHM0ogKEICAgICGh6SB.jpg",tag:"food"},
+        {file:"0002_food_AF1QipN2qlP180Os6YMm.jpg",tag:"food"},
+        {file:"0003_food_CIABIhCP06P6KTVxdJ2Q.jpg",tag:"food"},
+        {file:"0004_food_CIABIhB9Sdv9BqzNfx-7.jpg",tag:"food"},
+        {file:"0005_food_AF1QipMfuXMxU9Zkvfv0.jpg",tag:"food"},
+        {file:"0006_food_CIABIhDXoZfXnie9cu2r.jpg",tag:"food"},
+        {file:"0007_food_CIHM0ogKEICAgIC28t6n.jpg",tag:"food"},
+        {file:"0008_food_CIHM0ogKEICAgICDopWV.jpg",tag:"food"},
+        {file:"0009_food_CIHM0ogKEICAgMCo95We.jpg",tag:"food"},
+        {file:"0010_front_AF1QipMSe-wtqAsipym3.jpg",tag:"front"},
+        {file:"0011_food_CIHM0ogKEICAgMDQ5KTl.jpg",tag:"food"},
+        {file:"0012_menu_AF1QipNOPpbYBQMcNIFk.jpg",tag:"menu"},
+        {file:"0013_food_CIHM0ogKEICAgICOgrP7.jpg",tag:"food"},
+        {file:"0015_food_AF1QipPbxjF67obP3ik4.jpg",tag:"food"},
+        {file:"0016_food_CIABIhC3Fjeez178YgdP.jpg",tag:"food"},
+        {file:"0017_food_CIABIhDO6v8ao3GmHMuS.jpg",tag:"food"},
+        {file:"0018_food_CIHM0ogKEICAgIC28t7z.jpg",tag:"food"},
+        {file:"0019_food_AF1QipM9EEzeX8dK1_F2.jpg",tag:"food"},
+        {file:"0020_front_AF1QipMn7cszzfDYSuAo.jpg",tag:"front"},
+        {file:"0021_food_AF1QipNF2FvvpaXmzBEx.jpg",tag:"food"},
+        {file:"0022_food_AF1QipMR6SWytCmmxjqr.jpg",tag:"food"},
+        {file:"0023_food_CIABIhDO-H8vQoJ02SxU.jpg",tag:"food"},
+        {file:"0024_food_CIHM0ogKEICAgICFxdn0.jpg",tag:"food"},
+        {file:"0025_food_AF1QipOuJGLkpVkztr2R.jpg",tag:"food"},
+        {file:"0026_food_CIABIhDN0f2tC6nDrlW4.jpg",tag:"food"},
+        {file:"0027_food_CIHM0ogKEICAgID6nYyF.jpg",tag:"food"},
+        {file:"0028_food_CIHM0ogKEICAgIC6l4j8.jpg",tag:"food"},
+        {file:"0029_food_CIHM0ogKEICAgMDw5qSy.jpg",tag:"food"},
+        {file:"0030_food_CIHM0ogKEICAgMDQ5KTl.jpg",tag:"food"},
+        {file:"0031_menu_AF1QipNWWQ67cy-XhS0J.jpg",tag:"menu"},
+        {file:"0033_food_CIHM0ogKEICAgIC1i8mo.jpg",tag:"food"},
+        {file:"0034_food_AF1QipP7X2ZZWvBhInLz.jpg",tag:"food"},
+        {file:"0035_food_CIHM0ogKEICAgIChyIm0.jpg",tag:"food"},
+        {file:"0036_food_CIHM0ogKEICAgIDzh4gN.jpg",tag:"food"},
+        {file:"0037_food_CIHM0ogKEICAgICMyNbY.jpg",tag:"food"},
+        {file:"0038_front_AF1QipOEfjWw_VcJzQx_.jpg",tag:"front"},
+        {file:"0039_food_CIHM0ogKEICAgICOgrOt.jpg",tag:"food"},
+        {file:"0041_front_CIHM0ogKEICAgICag8aQ.jpg",tag:"front"},
+        {file:"0042_food_AF1QipNh6B01urRIeUEb.jpg",tag:"food"},
+        {file:"0043_food_CIHM0ogKEICAgICXw_LF.jpg",tag:"food"},
+        {file:"0044_food_CIHM0ogKEICAgIDF2uvq.jpg",tag:"food"},
+        {file:"0045_food_CIABIhDLNR3ACGVnsXgn.jpg",tag:"food"},
+        {file:"0046_food_AF1QipOWBzoZOeaybmSF.jpg",tag:"food"},
+        {file:"0048_food_AF1QipNM1aah9CLmVcPU.jpg",tag:"food"},
+        {file:"0049_menu_AF1QipNv0OYwv1GeDOPF.jpg",tag:"menu"},
+        {file:"0051_food_CIHM0ogKEICAgIDRxojq.jpg",tag:"food"},
+        {file:"0052_food_CIHM0ogKEICAgIDzh4iN.jpg",tag:"food"},
+        {file:"0053_food_CIHM0ogKEICAgICewPr6.jpg",tag:"food"},
+        {file:"0054_front_CIHM0ogKEICAgICbmLao.jpg",tag:"front"},
+        {file:"0056_food_CIHM0ogKEICAgICFxdmI.jpg",tag:"food"},
+        {file:"0057_food_CIABIhDbcSE27Ip8YxKT.jpg",tag:"food"},
+        {file:"0058_food_CIHM0ogKEICAgMCoz5jf.jpg",tag:"food"},
+        {file:"0059_food_CIHM0ogKEICAgIDGgcLR.jpg",tag:"food"},
+        {file:"0060_front_CIHM0ogKEICAgICM9ojT.jpg",tag:"front"},
+        {file:"0061_food_AF1QipNNLB6xt361i9vh.jpg",tag:"food"},
+        {file:"0062_food_CIHM0ogKEICAgICT-8Gv.jpg",tag:"food"},
+        {file:"0063_food_AF1QipPdGl4UtN36eHvN.jpg",tag:"food"},
+        {file:"0064_food_CIHM0ogKEICAgICbmLao.jpg",tag:"food"},
+        {file:"0066_food_AF1QipPbnyhgtCEjIzVC.jpg",tag:"food"},
+        {file:"0067_food_CIHM0ogKEICAgICbmLao.jpg",tag:"food"},
+        {file:"0068_food_AF1QipPrf2UwhMVZqCvk.jpg",tag:"food"},
+        {file:"0069_food_AF1QipP4I9QJpuN2hXs-.jpg",tag:"food"},
+        {file:"0071_food_CIHM0ogKEICAgICCxZSZ.jpg",tag:"food"},
+        {file:"0072_food_CIHM0ogKEICAgICRrJCF.jpg",tag:"food"},
+        {file:"0073_food_CIHM0ogKEICAgICFxdno.jpg",tag:"food"},
+        {file:"0074_food_CIABIhCQ_n4aXtuij5CO.jpg",tag:"food"},
+        {file:"0075_food_AF1QipMhDFHGXDInM-aQ.jpg",tag:"food"},
+        {file:"0076_food_CIHM0ogKEICAgIDzh4j1.jpg",tag:"food"},
+        {file:"0077_front_CIHM0ogKEICAgIDzh4iN.jpg",tag:"front"},
+        {file:"0078_food_CIHM0ogKEICAgIC6iL-U.jpg",tag:"food"},
+        {file:"0100_front_CIABIhCpSy27IeZBYh90.jpg",tag:"front"},
+        {file:"0116_front_CIHM0ogKEICAgICzlf6Z.jpg",tag:"front"},
+        {file:"0120_front_CIHM0ogKEICAgICbmLao.jpg",tag:"front"},
+        {file:"0135_front_CIHM0ogKEICAgIDBic22.jpg",tag:"front"},
+        {file:"0151_front_CIHM0ogKEICAgICy7sG0.jpg",tag:"front"},
+        {file:"0152_front_CIHM0ogKEICAgICOgsOQ.jpg",tag:"front"},
+        {file:"0166_front_CIHM0ogKEICAgIDq6tO7.jpg",tag:"front"},
+        {file:"0188_menu_AF1QipO508_YSx6KWYMF.jpg",tag:"menu"},
+        {file:"0236_menu_CIHM0ogKEICAgICZ1Ze0.jpg",tag:"menu"},
+        {file:"0247_menu_CIHM0ogKEICAgICpoZK6.jpg",tag:"menu"},
+        {file:"0254_menu_CIHM0ogKEICAgIDa-ImM.jpg",tag:"menu"},
+        {file:"0256_menu_CIHM0ogKEICAgICbmLao.jpg",tag:"menu"},
+        {file:"0263_menu_CIHM0ogKEICAgICZ1Ze0.jpg",tag:"menu"},
+        {file:"0265_menu_CIHM0ogKEICAgICZ1Ze0.jpg",tag:"menu"},
+        {file:"0270_menu_CIHM0ogKEICAgICazuOP.jpg",tag:"menu"},
+        {file:"0275_menu_CIHM0ogKEICAgICZ1Ze0.jpg",tag:"menu"},
+        {file:"0278_menu_CIHM0ogKEICAgICZ1Ze0.jpg",tag:"menu"},
+        {file:"0281_menu_CIHM0ogKEICAgICB87Gk.jpg",tag:"menu"},
+        {file:"0284_menu_CIHM0ogKEICAgID92IiM.jpg",tag:"menu"}
     ];
 
-    let cart = {};   // { id: { item, qty } }
+    const REVIEWS = [
+        {author_title:"Irene Fernandez Gomez",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjUHvG7SP18MpMGEHAc9wEWSAImUmkk5BgJw48NArlCnLJDYXjdy=s120-c-rp-mo-ba5-br100",review_rating:5,review_text:"Obligatorio visitar este lugar si te gusta la comida coreana, todo super rico.  Tienen cuartos con karaoke que puedes reservar.",review_datetime_utc:"12/19/2025 01:12:48"},
+        {author_title:"Ivette Gonzalez Chavez",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWQyxhUD47jxEbJrYyoauAYy_3H0gvf6_VvfciTnNTlHwQxaucM=s120-c-rp-mo-ba4-br100",review_rating:5,review_text:"La comida coreana es de mis favoritas pero este lugarsito para comerla es super especial me encantaron todos los platillos.",review_datetime_utc:"12/17/2025 22:00:31"},
+        {author_title:"Diana G",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjUGyGMeH1_nKZwL9BET4oMUGFg7m9PamNHhhVSxL486_D1BCIfw=s120-c-rp-mo-br100",review_rating:5,review_text:"Realmente rica la comida. El dia que fuimos nos dieron a probar uno de sus pollos fritos que realmente estaban muy buenos. Ademas de que la atencion que recibimos fue bastante amable.",review_datetime_utc:"09/02/2025 21:46:01"},
+        {author_title:"Arely Pineda",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjW0x_5Tm0PXWpS6uy2hPrbYKY_1zO00j664fo84JYkHmc-ZY8u0wg=s120-c-rp-mo-ba4-br100",review_rating:5,review_text:"Comida muy rica, buena atencion.",review_datetime_utc:"08/18/2025 20:51:01"},
+        {author_title:"Kev Rdgzzz",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWDVbmwRopX5DZaKsXy5NiNVtiRvUFtbGsiVpJze2Qh5YqfKOyBtw=s120-c-rp-mo-br100",review_rating:5,review_text:"Excelente servicio y comida muy deliciosa para el que sabe, agradable para ir con tu grupo de amigos.",review_datetime_utc:"06/15/2025 21:09:21"},
+        {author_title:"agente pedroza sando",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWqSXONewafLsPRDKolNi8SasHhFYV9rCB3G5fcNcXcVJyhQL8=s120-c-rp-mo-ba2-br100",review_rating:5,review_text:"Seoul es un espacio ciertamente relajado donde puedes degustar buena comida. Los platillos son buenos. Precios asequibles, lugar apto para ir en pareja o en grupo de 4.",review_datetime_utc:"06/02/2025 06:45:32"},
+        {author_title:"DANIEL FUENTES",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjVGpCQwO4sf2xKFnKGdC_72KOnOWGt__vX4sogQ9_purKNvmis=s120-c-rp-mo-ba4-br100",review_rating:5,review_text:"Muy rica la comida. Excelente lugar para comer en pareja.",review_datetime_utc:"04/20/2025 20:44:38"},
+        {author_title:"Alma Aguirre",author_image:"https://lh3.googleusercontent.com/a/ACg8ocJWz-llHOQWQUC9u9LHIb-tNOVGuswXBtr0o_j0qrPuTwkontI=s120-c-rp-mo-ba3-br100",review_rating:5,review_text:"De mis lugares favoritos para comer comida koreana. El sazon que tienen supera por mucho otros establecimientos. En fin de semana es mejor llamar para apartar lugar porque suele llenarse.",review_datetime_utc:"03/31/2025 14:24:44"},
+        {author_title:"Claudia Lerma",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjUpFcNO7E7LksnpGFZiJ0EWhqcoGbS2iJF7QzrzJp7xk8NI8ceOdg=s120-c-rp-mo-ba3-br100",review_rating:5,review_text:"Muy buen servicio, excelente comida y atmosfera.",review_datetime_utc:"03/25/2025 16:16:16"},
+        {author_title:"kenya aguilar",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWiKns-eRMYQWyjlRKNO1wsxzCAl3crSDDJLWgM8P97V2JOqnG9=s120-c-rp-mo-br100",review_rating:5,review_text:"La comida deliciosa y el servicio excelente.",review_datetime_utc:"03/12/2025 20:50:06"},
+        {author_title:"Angie Colorado",author_image:"https://lh3.googleusercontent.com/a/ACg8ocIPRZ_iUbiMvN_dqY9Mgm-Id2cnP9yFYM_Z5EW5o_Z5bQGWQw=s120-c-rp-mo-ba4-br100",review_rating:4,review_text:"Por 2 personas = 650 pesos aprox Pedimos 2 platillos, Gimbap Bulgogi (Deli, pero hay mejores) y Tonkatsu (Super rico). Bebidas, jugo de pera y agua de arroz muy ricas.",review_datetime_utc:"08/03/2025 07:25:51"},
+        {author_title:"The Ultimus",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjU06BgOh2R_5sS5Qr9QtIy9LpQYm0zfLpu8gDARYHOY6n0vyuT5=s120-c-rp-mo-ba4-br100",review_rating:4,review_text:"Poco personal y muy concurrente.",review_datetime_utc:"04/20/2025 18:38:43"},
+        {author_title:"musica Lara rpip",author_image:"https://lh3.googleusercontent.com/a/ACg8ocJ8zpBn9H8Nip-y6cJK_ILDw4nVfDVTqLT1izPT-jFPNk5FNw=s120-c-rp-mo-ba2-br100",review_rating:4,review_text:"Muy agradable lo recomiendo rica la comida y vevidas.",review_datetime_utc:"03/23/2025 03:50:39"},
+        {author_title:"Elizabeth Duran",author_image:"https://lh3.googleusercontent.com/a/ACg8ocIFoKDdpXMUBDXg3okTrXmacwcFR6ea0penHM9Dxv89BXzsOA=s120-c-rp-mo-ba5-br100",review_rating:4,review_text:"Lo unico malo es que no hay estacionamiento de agua todo esta muy rico.",review_datetime_utc:"12/10/2024 01:10:11"},
+        {author_title:"Gina Reza",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWgFAQSSnj6ZXqkl24cD8qcfq5uwjNvWGcWZrtb5JSv3h_tShz1jA=s120-c-rp-mo-ba5-br100",review_rating:3,review_text:"2nd time here, my daughter lived in SK and this is a good place for her to eat K food.",review_datetime_utc:"05/29/2025 01:15:47"},
+        {author_title:"Adriana Celis",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjUs_5hEWhrLS9JPguxcKyabmLjgwkySTLq_S3cy7z4dbxNWxMM=s120-c-rp-mo-br100",review_rating:3,review_text:"Si me gusto como se carne la carne cuando pides carne, en taco pero de lechuga y la combinacion de sabores pero el lugar me parecio poco acogedor.",review_datetime_utc:"04/23/2025 20:28:24"},
+        {author_title:"Calvin C",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjVTFNbEe7SHubU0S9ZOqHyH2TTMDebnHeHdBktkq8YYFpOdcqoZJA=s120-c-rp-mo-ba3-br100",review_rating:2,review_text:"friendly servers but slow  kimchi jigae is really authentic & flavorful  unfortunately the bbq was overpriced for the quality.",review_datetime_utc:"06/28/2025 06:21:06"},
+        {author_title:"Alejandro Belmontes",author_image:"https://lh3.googleusercontent.com/a/ACg8ocLzCVzHhcGPQc4_hb76mRmRHYZ37_-vH0QfUj2TYGAMcZa3og=s120-c-rp-mo-ba2-br100",review_rating:2,review_text:"Food overpriced, unseasoned, flat, would not recommend I would encourage people to not go. Low quality even for a k-bbq.",review_datetime_utc:"08/09/2025 23:07:36"},
+        {author_title:"Anthony San",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWlbFICR2mOnnzpUX3p_5fxLy97N--HB_9yfftzKbZUhUPVMYQ=s120-c-rp-mo-br100",review_rating:1,review_text:"Mala experiencia con el tema de horarios, tienen una hoja pegada donde dice que abren a las 2pm hice tiempo para venir aqui hasta que abrieran para que me regresen.",review_datetime_utc:"12/30/2025 22:12:03"},
+        {author_title:"kyree WEn",author_image:"https://lh3.googleusercontent.com/a-/ALV-UjWZ8jtjKnhzQpJ_YuCOZviciDDojw6HakMdIrcJHqTzGqOOhXk=s120-c-rp-mo-br100",review_rating:1,review_text:"Todo estaba frio. El servicio fue pesimo. La comida no era mala, pero definitivamente no era buena y no valia lo que costaba.",review_datetime_utc:"01/05/2026 17:13:32"}
+    ];
 
-    // ── GA4 event helper — routes through sGTM server ────────────────────────
+    const RATING_DIST = {5:293, 4:66, 3:30, 2:15, 1:28};
+    const TOTAL_REVIEWS = 432;
+
+    const HOURS = {
+        0: {open: 13, close: 22, label: "1:00 PM - 10:00 PM"},
+        1: {open: null, close: null, label: "Closed"},
+        2: {open: 14, close: 21, label: "2:00 PM - 9:00 PM"},
+        3: {open: 14, close: 21, label: "2:00 PM - 9:00 PM"},
+        4: {open: 14, close: 21, label: "2:00 PM - 9:00 PM"},
+        5: {open: 14, close: 22, label: "2:00 PM - 10:00 PM"},
+        6: {open: 13, close: 22, label: "1:00 PM - 10:00 PM"}
+    };
+
+    // =========================================
+    // EVENT LOG
+    // =========================================
+
+    let eventCount = 0;
+
+    function logEvent(eventName, payload) {
+        eventCount++;
+        var log = document.getElementById('event-log');
+        var countEl = document.getElementById('event-count');
+        if (!log) return;
+        var entry = document.createElement('div');
+        entry.className = 'event-entry';
+        var now = new Date();
+        var timeStr = now.toLocaleTimeString('en-US', {hour12:false});
+        var payloadStr = payload ? JSON.stringify(payload, null, 1) : '{}';
+        entry.innerHTML = '<span class="event-name">' + eventName + '</span>' +
+            '<span class="event-time">' + timeStr + '</span>' +
+            '<div class="event-payload">' + payloadStr + '</div>';
+        log.insertBefore(entry, log.firstChild);
+        if (countEl) countEl.textContent = '(' + eventCount + ')';
+    }
+
     function pushEvent(eventName, payload) {
         gtag('event', eventName, payload);
         logEvent(eventName, payload);
     }
 
-    // ── Event log UI ──────────────────────────────────────────────────────────
-    function logEvent(eventName, payload) {
-        const list = document.getElementById('log-list');
-        // Remove the placeholder on first real event
-        if (list.children.length === 1 && list.children[0].textContent.includes('Waiting')) {
-            list.innerHTML = '';
+    function clearLog() {
+        var log = document.getElementById('event-log');
+        if (log) log.innerHTML = '';
+        eventCount = 0;
+        var countEl = document.getElementById('event-count');
+        if (countEl) countEl.textContent = '(0)';
+    }
+
+    // =========================================
+    // OPEN / CLOSED STATUS
+    // =========================================
+
+    function getOpenStatus() {
+        var now = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Tijuana"}));
+        var day = now.getDay();
+        var hour = now.getHours();
+        var h = HOURS[day];
+        if (!h || h.open === null) return {isOpen: false, label: "Closed today"};
+        if (hour >= h.open && hour < h.close) {
+            return {isOpen: true, label: "Open now -- closes at " + (h.close > 12 ? (h.close - 12) + ':00 PM' : h.close + ':00 AM')};
         }
-        const now = new Date().toLocaleTimeString('en-GB', { hour12: false });
-        const li = document.createElement('li');
-        const detail = JSON.stringify(payload).slice(0, 80);
-        li.innerHTML = `<span class="log-time">${now}</span><span class="log-event">${eventName}</span> ${detail}`;
-        list.prepend(li);
+        if (hour < h.open) {
+            return {isOpen: false, label: "Closed -- opens at " + (h.open > 12 ? (h.open - 12) + ':00 PM' : h.open + ':00 AM')};
+        }
+        return {isOpen: false, label: "Closed now"};
     }
 
-    // ── Render menu ───────────────────────────────────────────────────────────
-    function renderMenu() {
-        const container = document.getElementById('menu');
-        container.innerHTML = MENU.map(item => `
-            <div class="card" id="card-${item.id}" onclick="viewItem('${item.id}')">
-                <div class="card-img">${item.emoji}</div>
-                <div class="card-body">
-                    <div class="card-name">${item.name}</div>
-                    <div class="card-desc">${item.category} · Made fresh daily</div>
-                    <div class="card-footer">
-                        <span class="price">$${item.price.toFixed(2)}</span>
-                        <button class="btn-add" id="btn-${item.id}"
-                            onclick="event.stopPropagation(); addToCart('${item.id}')">
-                            + Add
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
+    function updateOpenStatus() {
+        var status = getOpenStatus();
+        var el = document.getElementById('open-status-bar');
+        if (!el) return;
+        el.innerHTML = '<span class="' + (status.isOpen ? 'badge-open' : 'badge-closed') + '">' + status.label + '</span>';
     }
 
-    // ── Events ────────────────────────────────────────────────────────────────
-    function viewItem(id) {
-        const item = MENU.find(m => m.id === id);
-        pushEvent('view_item', {
-            currency: 'USD',
-            value: item.price,
-            items: [{ item_id: item.id, item_name: item.name, price: item.price, item_category: item.category }]
+    // Highlight today's row
+    function highlightToday() {
+        var now = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Tijuana"}));
+        var day = now.getDay();
+        var rows = document.querySelectorAll('#hours-table tr[data-day]');
+        rows.forEach(function(r) {
+            if (parseInt(r.getAttribute('data-day')) === day) r.classList.add('today');
         });
     }
 
-    function addToCart(id) {
-        const item = MENU.find(m => m.id === id);
-        if (cart[id]) {
-            cart[id].qty += 1;
-        } else {
-            cart[id] = { item, qty: 1 };
+    // =========================================
+    // PHOTO GALLERY
+    // =========================================
+
+    var currentTab = 'all';
+    var photosPerPage = 20;
+    var currentPage = 1;
+    var filteredPhotos = [];
+    var lightboxIndex = 0;
+
+    function getFilteredPhotos(tab) {
+        if (tab === 'all') return PHOTOS.slice();
+        return PHOTOS.filter(function(p) { return p.tag === tab; });
+    }
+
+    function renderGallery() {
+        filteredPhotos = getFilteredPhotos(currentTab);
+        var grid = document.getElementById('gallery-grid');
+        grid.innerHTML = '';
+        var end = Math.min(currentPage * photosPerPage, filteredPhotos.length);
+        for (var i = 0; i < end; i++) {
+            var photo = filteredPhotos[i];
+            var div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.setAttribute('data-index', i);
+            div.innerHTML = '<img src="photos/' + photo.file + '" alt="' + photo.tag + '" loading="lazy">';
+            div.addEventListener('click', (function(idx) {
+                return function() { openLightbox(idx); };
+            })(i));
+            grid.appendChild(div);
         }
+        var btn = document.getElementById('gallery-load-more');
+        btn.style.display = (end < filteredPhotos.length) ? 'block' : 'none';
+    }
 
-        // Visual feedback
-        const btn = document.getElementById(`btn-${id}`);
-        btn.textContent = `✓ ${cart[id].qty}`;
-        btn.classList.add('added');
-
-        pushEvent('add_to_cart', {
-            currency: 'USD',
-            value: item.price,
-            items: [{ item_id: item.id, item_name: item.name, price: item.price, quantity: cart[id].qty }]
+    function switchTab(tab) {
+        currentTab = tab;
+        currentPage = 1;
+        document.querySelectorAll('.gallery-tab').forEach(function(t) {
+            t.classList.toggle('active', t.getAttribute('data-tab') === tab);
         });
-
-        renderCart();
+        renderGallery();
     }
 
-    function removeFromCart(id) {
-        delete cart[id];
-        const btn = document.getElementById(`btn-${id}`);
-        if (btn) { btn.textContent = '+ Add'; btn.classList.remove('added'); }
-        renderCart();
-    }
-
-    function renderCart() {
-        const container = document.getElementById('cart-items');
-        const totalEl   = document.getElementById('cart-total');
-        const totalPrice = document.getElementById('total-price');
-        const checkoutBtn = document.getElementById('btn-checkout');
-
-        const entries = Object.values(cart);
-        if (entries.length === 0) {
-            container.innerHTML = '<p class="cart-empty">Your cart is empty</p>';
-            totalEl.style.display = 'none';
-            checkoutBtn.disabled = true;
-            return;
-        }
-
-        const total = entries.reduce((s, e) => s + e.item.price * e.qty, 0);
-        container.innerHTML = entries.map(({ item, qty }) => `
-            <div class="cart-item">
-                <span class="cart-item-name">${item.emoji} ${item.name}</span>
-                <span class="cart-item-qty">×${qty}</span>
-                <span class="cart-item-price">$${(item.price * qty).toFixed(2)}</span>
-                <button class="btn-remove" onclick="removeFromCart('${item.id}')">✕</button>
-            </div>
-        `).join('');
-
-        totalEl.style.display = 'flex';
-        totalPrice.textContent = `$${total.toFixed(2)}`;
-        checkoutBtn.disabled = false;
-    }
-
-    function checkout() {
-        const entries = Object.values(cart);
-        const total   = entries.reduce((s, e) => s + e.item.price * e.qty, 0);
-        const items   = entries.map(({ item, qty }) => ({
-            item_id:       item.id,
-            item_name:     item.name,
-            price:         item.price,
-            quantity:      qty,
-            item_category: item.category
-        }));
-
-        // begin_checkout
-        pushEvent('begin_checkout', { currency: 'USD', value: total, items });
-
-        // Simulate payment delay → purchase
-        setTimeout(() => {
-            const transactionId = 'TXN-' + Date.now();
-            pushEvent('purchase', {
-                transaction_id: transactionId,
-                currency:       'USD',
-                value:          total,
-                tax:            +(total * 0.08).toFixed(2),
-                items
-            });
-
-            document.getElementById('modal-msg').textContent =
-                `Transaction ${transactionId} · Total $${total.toFixed(2)}`;
-            document.getElementById('modal').classList.add('show');
-
-            // Reset cart
-            cart = {};
-            document.querySelectorAll('.btn-add').forEach(b => {
-                b.textContent = '+ Add';
-                b.classList.remove('added');
-            });
-            renderCart();
-        }, 800);
-    }
-
-    function closeModal() {
-        document.getElementById('modal').classList.remove('show');
-    }
-
-    // ── Init ──────────────────────────────────────────────────────────────────
-    renderMenu();
-
-    // Fire page_view on load
-    pushEvent('page_view', {
-        page_title:    'Restaurant Menu',
-        page_location: window.location.href,
-        restaurant_id: 'restaurant_demo_01'
+    document.getElementById('gallery-load-more').addEventListener('click', function() {
+        currentPage++;
+        renderGallery();
     });
+
+    document.querySelectorAll('.gallery-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            switchTab(this.getAttribute('data-tab'));
+        });
+    });
+
+    // Lightbox
+    function openLightbox(index) {
+        lightboxIndex = index;
+        var photo = filteredPhotos[index];
+        document.getElementById('lightbox-img').src = 'photos/' + photo.file;
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        pushEvent('view_photo', {photo_id: photo.file, photo_tag: photo.tag, restaurant_id: 'seoul_restaurant'});
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) closeLightbox();
+    });
+
+    document.getElementById('lightbox-prev').addEventListener('click', function(e) {
+        e.stopPropagation();
+        lightboxIndex = (lightboxIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+        var photo = filteredPhotos[lightboxIndex];
+        document.getElementById('lightbox-img').src = 'photos/' + photo.file;
+        pushEvent('view_photo', {photo_id: photo.file, photo_tag: photo.tag, restaurant_id: 'seoul_restaurant'});
+    });
+
+    document.getElementById('lightbox-next').addEventListener('click', function(e) {
+        e.stopPropagation();
+        lightboxIndex = (lightboxIndex + 1) % filteredPhotos.length;
+        var photo = filteredPhotos[lightboxIndex];
+        document.getElementById('lightbox-img').src = 'photos/' + photo.file;
+        pushEvent('view_photo', {photo_id: photo.file, photo_tag: photo.tag, restaurant_id: 'seoul_restaurant'});
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (!document.getElementById('lightbox').classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') document.getElementById('lightbox-prev').click();
+        if (e.key === 'ArrowRight') document.getElementById('lightbox-next').click();
+    });
+
+    // =========================================
+    // RATING BARS
+    // =========================================
+
+    function renderRatingBars() {
+        var container = document.getElementById('rating-bars');
+        var html = '';
+        for (var s = 5; s >= 1; s--) {
+            var count = RATING_DIST[s] || 0;
+            var pct = (count / TOTAL_REVIEWS * 100).toFixed(1);
+            html += '<div class="rating-bar-row">' +
+                '<span class="label">' + s + '</span>' +
+                '<div class="rating-bar-track"><div class="rating-bar-fill" style="width:' + pct + '%"></div></div>' +
+                '<span class="bar-count">' + count + '</span></div>';
+        }
+        container.innerHTML = html;
+    }
+
+    // =========================================
+    // REVIEWS
+    // =========================================
+
+    var reviewsPerPage = 10;
+    var reviewPage = 1;
+
+    function starsHtml(rating) {
+        var s = '';
+        for (var i = 1; i <= 5; i++) s += (i <= rating) ? '&#9733;' : '&#9734;';
+        return s;
+    }
+
+    function formatDate(dtStr) {
+        var parts = dtStr.split(' ')[0].split('/');
+        var months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[parseInt(parts[0])] + ' ' + parseInt(parts[1]) + ', ' + parts[2];
+    }
+
+    function renderReviews() {
+        var container = document.getElementById('reviews-list');
+        container.innerHTML = '';
+        var end = Math.min(reviewPage * reviewsPerPage, REVIEWS.length);
+        for (var i = 0; i < end; i++) {
+            var r = REVIEWS[i];
+            var card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = '<div class="review-header">' +
+                '<img class="review-avatar" src="' + r.author_image + '" alt="' + r.author_title + '" onerror="this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23ddd%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2226%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2216%22>' + r.author_title.charAt(0) + '</text></svg>\'">' +
+                '<div><div class="review-author">' + r.author_title + '</div>' +
+                '<div class="review-meta"><span class="stars">' + starsHtml(r.review_rating) + '</span> <span>' + formatDate(r.review_datetime_utc) + '</span></div></div></div>' +
+                (r.review_text ? '<div class="review-text">' + r.review_text + '</div>' : '');
+            container.appendChild(card);
+        }
+        var btn = document.getElementById('reviews-load-more');
+        btn.style.display = (end < REVIEWS.length) ? 'block' : 'none';
+    }
+
+    document.getElementById('reviews-load-more').addEventListener('click', function() {
+        reviewPage++;
+        renderReviews();
+    });
+
+    // =========================================
+    // INTERSECTION OBSERVER FOR REVIEWS
+    // =========================================
+
+    var reviewsObserved = false;
+    var reviewsObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting && !reviewsObserved) {
+                reviewsObserved = true;
+                pushEvent('view_reviews', {restaurant_id: 'seoul_restaurant'});
+            }
+        });
+    }, {threshold: 0.2});
+
+    // =========================================
+    // INIT
+    // =========================================
+
+    (function init() {
+        updateOpenStatus();
+        highlightToday();
+        renderGallery();
+        renderRatingBars();
+        renderReviews();
+
+        var reviewsSection = document.getElementById('reviews-section');
+        if (reviewsSection) reviewsObserver.observe(reviewsSection);
+
+        // Fire page_view
+        pushEvent('page_view', {page_title: 'Seoul Restaurant', restaurant_id: 'seoul_restaurant'});
+    })();
 </script>
+
 </body>
 </html>
